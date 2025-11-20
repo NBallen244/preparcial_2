@@ -78,7 +78,7 @@ export class AppointmentsService {
         const appointment = await this.appointmentsRepository.findOneBy({ id: appointmentId });
         if (appointment) {
             const statusActual = appointment.status;
-            if(statusActual === AppointmentStatus.PENDING && status !== AppointmentStatus.DONE){
+            if(statusActual === AppointmentStatus.PENDING && status !== AppointmentStatus.PENDING){
                 appointment.status = status;
                 await this.appointmentsRepository.save(appointment);
             }
