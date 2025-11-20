@@ -1,8 +1,25 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable prettier/prettier */
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { VersioningType } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(process.env.PORT ?? 3000);
+  app.enableVersioning({
+   type: VersioningType.URI,
+   prefix: 'api/v',
+   defaultVersion: '1',
+ });
+ const config = new DocumentBuilder()
+    .setTitle('Preparcial API')
+    .setDescription('Endpoints para el preparcial 2 de Programación Web')
+    .setVersion('1.0')
+    .addTag('cats')
+    .build();
+  const documentFactory = () => SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, documentFactory);
+ await app.listen(8000);
 }
 bootstrap();

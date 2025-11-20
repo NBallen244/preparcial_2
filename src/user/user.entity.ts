@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import * as bcrypt from 'bcrypt';
 import { RoleEntity } from "../role/role.entity";
 
@@ -13,7 +13,7 @@ export class UserEntity {
     password: string;
     @Column()
     name: string;
-    @Column({nullable: true})
+    @Column({nullable: true, type: 'bigint'})
     phone: number;
     @Column({default: true})
     is_active: boolean;
@@ -24,7 +24,6 @@ export class UserEntity {
     roles: RoleEntity[];
 
     @BeforeInsert()
-    @BeforeUpdate()
     async hashPassword() {
         if (this.password) {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
