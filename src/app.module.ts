@@ -10,6 +10,8 @@ import { UserEntity } from './user/user.entity';
 import { RoleEntity } from './role/role.entity';
 import { SeedService } from './sql/seed/seed.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { AppointmentsModule } from './appointments/appointments.module';
+import { AppointmentsEntity } from './appointments/appointments.entity';
 
 @Module({
   imports: [UserModule, RoleModule, AuthModule,
@@ -25,7 +27,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
             username: configService.get<string>('DB_USER'),
             password: configService.get<string>('DB_PASS'),
             database: configService.get<string>('DB_NAME'),
-            entities: [UserEntity, RoleEntity],
+            entities: [UserEntity, RoleEntity, AppointmentsEntity],
             synchronize: true,
             dropSchema: true,
             keepConnectionAlive: true,
@@ -33,6 +35,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
           }),
           inject: [ConfigService], // Inject ConfigService
         }),
+    AppointmentsModule,
   ],
   controllers: [AppController],
   providers: [AppService, SeedService],

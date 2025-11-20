@@ -5,8 +5,8 @@
 -- Paso 1: Insertar 3 roles (incluyendo Admin)
 INSERT INTO role_entity (id, role_name, description, created_at) VALUES
 ('550e8400-e29b-41d4-a716-446655440001', 'admin', 'Administrator with full system access', NOW()),
-('550e8400-e29b-41d4-a716-446655440002', 'user', 'Regular user with limited access', NOW()),
-('550e8400-e29b-41d4-a716-446655440003', 'moderator', 'Moderator with content management permissions', NOW());
+('550e8400-e29b-41d4-a716-446655440002', 'paciente', 'Regular user with limited access', NOW()),
+('550e8400-e29b-41d4-a716-446655440003', 'doctor', 'Moderator with content management permissions', NOW());
 
 -- Paso 2: Insertar 5 usuarios (2 desactivados)
 INSERT INTO user_entity (id, name, email, password, phone, is_active, created_at) VALUES

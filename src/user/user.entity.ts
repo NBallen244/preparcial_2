@@ -1,7 +1,8 @@
 /* eslint-disable prettier/prettier */
-import { BeforeInsert, Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, Column, CreateDateColumn, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import * as bcrypt from 'bcrypt';
 import { RoleEntity } from "../role/role.entity";
+import { AppointmentsEntity } from "../appointments/appointments.entity";
 
 @Entity()
 export class UserEntity {
@@ -22,6 +23,10 @@ export class UserEntity {
     @ManyToMany(() => RoleEntity, role => role.users)
     @JoinTable()
     roles: RoleEntity[];
+    @OneToMany(() => AppointmentsEntity, appointment => appointment.user)
+    appointments: AppointmentsEntity[];
+    @OneToMany(() => AppointmentsEntity, appointment => appointment.doctor)
+    doctorAppointments: AppointmentsEntity[];
 
     @BeforeInsert()
     async hashPassword() {
