@@ -1,13 +1,15 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, UseGuards, Request, Put, Param, Body, Delete, Post } from '@nestjs/common';
+import { Controller, Get, UseGuards, Request, Put, Param, Body, Delete, Post, UseInterceptors } from '@nestjs/common';
 import { AppointmentsService } from './appointments.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Roles } from '../role/role.decorator';
 import { RoleGuard } from '../role/role.guard';
 import { AppointmentStatus } from './appointments.entity';
 import { AppointmentDto } from './appointment.dto';
+import { BusinessErrorsInterceptor } from 'src/shared/interceptors/business-errors.interceptor';
 
 @Controller('citas')
+@UseInterceptors(BusinessErrorsInterceptor)
 export class AppointmentsController {
     constructor(private readonly appointmentsService: AppointmentsService) {}
 
