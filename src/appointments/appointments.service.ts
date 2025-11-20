@@ -21,7 +21,7 @@ export class AppointmentsService {
         if (!user) {
             throw new BussinessLogicException("Usuario no encontrado", BussinessError.NOT_FOUND);
         }
-        const doctor = await this.userRepository.findOneBy({ id: doctorId });
+        const doctor = await this.userRepository.findOne({ where: { id: doctorId }, relations: ['roles'] });
         if (!doctor) {
             throw new BussinessLogicException("Doctor no encontrado", BussinessError.NOT_FOUND);
         }
@@ -39,7 +39,7 @@ export class AppointmentsService {
     }
 
     async getAppointmentsByUser(userId: string): Promise<AppointmentsEntity[]> {
-        const user = await this.userRepository.findOneBy({ id: userId });
+        const user = await this.userRepository.findOne({ where: { id: userId }, relations: ['roles'] });
         if (!user) {
             throw new BussinessLogicException("Usuario no encontrado", BussinessError.NOT_FOUND);
         }
