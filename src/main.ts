@@ -13,13 +13,14 @@ async function bootstrap() {
    defaultVersion: '1',
  });
  const config = new DocumentBuilder()
-    .setTitle('Preparcial API')
+    .setTitle('Preparcial 2 API')
     .setDescription('Endpoints para el preparcial 2 de Programación Web')
     .setVersion('1.0')
-    .addTag('cats')
+    .addTag('preparcial')
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);
  await app.listen(8000);
 }
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
 bootstrap();

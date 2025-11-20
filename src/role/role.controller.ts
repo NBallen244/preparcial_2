@@ -8,6 +8,7 @@ import { BusinessErrorsInterceptor } from '../shared/interceptors/business-error
 import { Roles } from './role.decorator';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { RoleGuard } from './role.guard';
+import { ApiOperation } from '@nestjs/swagger';
 
 @Controller('roles')
 @UseInterceptors(BusinessErrorsInterceptor)
@@ -19,6 +20,7 @@ export class RoleController {
     @Roles('admin')
     @UseGuards(JwtAuthGuard, RoleGuard)
     @HttpCode(HttpStatus.CREATED)
+    @ApiOperation({ summary: 'Crear rol', description: 'Este endpoint permite crear un nuevo rol. Requiere rol de admin.' })
     @Post()
     async createRole(@Body() roleData:RoleDto) {
         const role = plainToInstance(RoleEntity, roleData);
@@ -28,6 +30,7 @@ export class RoleController {
     @Roles('admin')
     @UseGuards(JwtAuthGuard, RoleGuard)
     @HttpCode(HttpStatus.OK)
+    @ApiOperation({ summary: 'Listar roles', description: 'Este endpoint permite obtener todos los roles. Requiere rol de admin.' })
     @Get()
     async getRoles() {
         return await this.roleService.getRoles();

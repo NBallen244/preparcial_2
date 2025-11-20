@@ -7,6 +7,7 @@ import { UserEntity } from '../user/user.entity';
 import { plainToInstance } from 'class-transformer';
 import { BusinessErrorsInterceptor } from '../shared/interceptors/business-errors.interceptor';
 import { LocalAuthGuard } from './local-auth.guard';
+import { ApiOperation } from '@nestjs/swagger';
 
 @Controller('auth')
 @UseInterceptors(BusinessErrorsInterceptor)
@@ -16,6 +17,7 @@ export class AuthController {
     ) {}
 
     @HttpCode(HttpStatus.CREATED)
+    @ApiOperation({ summary: 'Registro', description: 'Este endpoint permite registrar un nuevo usuario con o sin roles preexistentes. Acceso Público.' })
     @Post('register')
     async registerUser(@Body() userData: UserDto, @Query('roles', new DefaultValuePipe([]), ParseArrayPipe) roles: string[]) {
         const user:UserEntity= plainToInstance(UserEntity, userData);
@@ -23,6 +25,7 @@ export class AuthController {
     }
 
     @UseGuards(LocalAuthGuard)
+    @ApiOperation({ summary: 'Login', description: 'Este endpoint permite a un usuario autenticarse y obtener un token JWT. Acceso Público.' })
     @Post('login')
     async loginUser(@Request() req) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
